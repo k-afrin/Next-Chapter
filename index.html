@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Next Chapter β€” Find your next favorite book</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --cream: #F7EFE2;
+    --cream-dark: #EADFC8;
+    --text-dark: #2E2620;
+    --text-muted: #6B5B4B;
+    --accent: #B5651D;
+    --accent-light: #C97C3D;
+    --bg: #FBF6ED;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text-dark);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 3rem 1.5rem;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+
+  header h1 {
+    font-family: 'Lora', serif;
+    font-size: 2.75rem;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  header p {
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    margin-top: 0.5rem;
+    font-style: italic;
+  }
+
+  .input-section {
+    width: 100%;
+    max-width: 460px;
+    background: #fff;
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 8px 24px rgba(90, 62, 40, 0.10);
+    text-align: center;
+  }
+
+  .input-section h2 {
+    font-family: 'Lora', serif;
+    font-size: 1.4rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .input-section .subtext {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-bottom: 1.4rem;
+  }
+
+  #bookInput {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    border: 1px solid #DDD3C0;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-family: 'Inter', sans-serif;
+    margin-bottom: 1rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  #bookInput:focus {
+    border-color: var(--accent);
+  }
+
+  #findBtn {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  #findBtn:hover {
+    background: var(--accent-light);
+  }
+
+  .hint {
+    font-size: 0.8rem;
+    color: #A89A85;
+    margin-top: 0.9rem;
+  }
+
+  /* Output card */
+  #resultArea {
+    width: 100%;
+    max-width: 460px;
+    margin-top: 2rem;
+  }
+
+  .next-chapter-card {
+    background-color: var(--cream);
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 8px 24px rgba(90, 62, 40, 0.12);
+    border-top: 4px solid var(--accent);
+    font-family: 'Lora', serif;
+    color: var(--text-dark);
+    animation: fadeIn 0.4s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .because-line {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 0.8rem;
+  }
+
+  .book-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  .book-author {
+    font-style: italic;
+    color: var(--text-muted);
+    margin-top: 0.2rem;
+    margin-bottom: 0.9rem;
+    font-size: 1rem;
+  }
+
+  .award-badge {
+    display: inline-block;
+    background-color: var(--cream-dark);
+    color: #7A4A22;
+    padding: 0.3rem 0.85rem;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    margin-bottom: 0.9rem;
+  }
+
+  .tags {
+    margin-bottom: 1rem;
+  }
+
+  .tag {
+    display: inline-block;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.75rem;
+    background: rgba(181, 101, 29, 0.10);
+    color: var(--accent);
+    padding: 0.25rem 0.65rem;
+    border-radius: 999px;
+    margin-right: 0.4rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .book-description {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--text-dark);
+  }
+
+  .no-match {
+    background: #fff;
+    border-radius: 16px;
+    padding: 1.5rem;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+  }
+
+  footer {
+    margin-top: 3rem;
+    max-width: 500px;
+    text-align: center;
+    font-size: 0.75rem;
+    color: #A89A85;
+    line-height: 1.5;
+  }
+</style>
+</head>
+
+<body>
+
+  <header>
+    <h1>Next Chapter</h1>
+    <p>Turn the page. Find your next favorite.</p>
+  </header>
+
+  <div class="input-section">
+    <h2>What's a book you loved?</h2>
+    <p class="subtext">Tell us the last book that stuck with you β€” we'll match by genre, theme, and the way it made you feel.</p>
+    <input type="text" id="bookInput" placeholder="e.g., The Kite Runner" />
+    <button id="findBtn">Find My Next Chapter</button>
+    <p class="hint">Try: The Kite Runner, Dune, Circe, Gone Girl, Educated...</p>
+  </div>
+
+  <div id="resultArea"></div>
+
+  <footer>
+    Next Chapter recommends real, published books. Titles, authors, and award information are factual references. Descriptions are original summaries, not official jacket text. Not affiliated with or endorsed by any author, publisher, or award organization mentioned.
+  </footer>
+
+<script>
+  const books = [
+    { title: "The Kite Runner", author: "Khaled Hosseini", award: null,
+      tags: ["literary fiction", "historical fiction", "redemption", "heartbreaking", "hopeful"],
+      description: "A story of friendship and betrayal set against the backdrop of a changing Afghanistan, following one man's lifelong search for redemption for a childhood act he can't forgive himself for." },
+
+    { title: "All the Light We Cannot See", author: "Anthony Doerr", award: "Pulitzer Prize for Fiction, 2015",
+      tags: ["literary fiction", "historical fiction", "bittersweet", "hopeful"],
+      description: "In Nazi-occupied France, a blind French girl and a young German soldier are pulled toward the same act of quiet resistance β€” a story about the light that survives even in the darkest years." },
+
+    { title: "The Book Thief", author: "Markus Zusak", award: null,
+      tags: ["historical fiction", "war", "bittersweet", "poignant"],
+      description: "Narrated by Death itself, this is the story of a young girl in Nazi Germany who finds solace in stolen books and the family who hides a secret in their basement." },
+
+    { title: "A Little Life", author: "Hanya Yanagihara", award: null,
+      tags: ["literary fiction", "contemporary", "devastating", "dark"],
+      description: "A profound and unflinching portrait of friendship and trauma, following four college friends in New York as one man's hidden past threatens to unravel them all." },
+
+    { title: "Where the Crawdads Sing", author: "Delia Owens", award: null,
+      tags: ["mystery", "literary fiction", "atmospheric", "bittersweet"],
+      description: "Raised alone in the marshes of the North Carolina coast, a young woman becomes a suspect in a local murder in this atmospheric blend of coming-of-age story and courtroom drama." },
+
+    { title: "The Nightingale", author: "Kristin Hannah", award: null,
+      tags: ["historical fiction", "war", "courage", "emotional"],
+      description: "Two sisters in Nazi-occupied France choose vastly different paths of survival and resistance in this sweeping story of sacrifice and sisterhood." },
+
+    { title: "Life of Pi", author: "Yann Martel", award: "Man Booker Prize, 2002",
+      tags: ["adventure", "philosophical", "hopeful", "whimsical"],
+      description: "After a shipwreck leaves a young man stranded on a lifeboat with a Bengal tiger, he must find the will β€” and the wonder β€” to survive." },
+
+    { title: "The Alchemist", author: "Paulo Coelho", award: null,
+      tags: ["philosophical fiction", "inspirational", "hopeful"],
+      description: "A young shepherd travels from Spain to Egypt in search of treasure, discovering along the way that the real journey is the one that leads him back to himself." },
+
+    { title: "Educated", author: "Tara Westover", award: null,
+      tags: ["memoir", "resilience", "inspiring"],
+      description: "Raised in a strict and isolated family in rural Idaho, the author didn't set foot in a classroom until she was seventeen β€” and went on to earn a PhD from Cambridge. A memoir about the price of education and self-invention." },
+
+    { title: "The Night Circus", author: "Erin Morgenstern", award: null,
+      tags: ["fantasy", "romance", "whimsical", "atmospheric"],
+      description: "Two young illusionists are bound since childhood to compete in a mysterious circus that only appears at night β€” and slowly fall in love in defiance of the game that could destroy them both." },
+
+    { title: "Circe", author: "Madeline Miller", award: "Women's Prize for Fiction, Finalist",
+      tags: ["fantasy", "mythology", "empowering", "lyrical"],
+      description: "Banished to a deserted island for a crime against the gods, the witch Circe hones her powers and carves out a fate of her own in this lyrical reimagining of Greek myth." },
+
+    { title: "The Song of Achilles", author: "Madeline Miller", award: "Orange Prize for Fiction",
+      tags: ["fantasy", "mythology", "tragic", "romantic"],
+      description: "A tender and devastating retelling of the bond between Achilles and Patroclus, tracing their friendship from boyhood to the battlefields of Troy." },
+
+    { title: "Project Hail Mary", author: "Andy Weir", award: null,
+      tags: ["science fiction", "survival", "hopeful", "humorous"],
+      description: "A lone astronaut wakes up with no memory on a spacecraft millions of miles from home β€” and must piece together the truth to save a dying Earth." },
+
+    { title: "The Martian", author: "Andy Weir", award: null,
+      tags: ["science fiction", "survival", "humorous", "tense"],
+      description: "Stranded alone on Mars with dwindling supplies, an astronaut must rely on ingenuity, duct tape, and sheer stubbornness to stay alive." },
+
+    { title: "Dune", author: "Frank Herbert", award: "Hugo Award; Nebula Award",
+      tags: ["science fiction", "epic", "political", "adventurous"],
+      description: "On a desert planet that holds the key to the galaxy's future, a young heir becomes entangled in prophecy, betrayal, and rebellion in this landmark of science fiction." },
+
+    { title: "The Hunger Games", author: "Suzanne Collins", award: null,
+      tags: ["dystopian", "YA", "tense", "hopeful"],
+      description: "In a nation ruled by a televised fight to the death, one girl volunteers to take her sister's place β€” and becomes a symbol of rebellion she never asked for." },
+
+    { title: "Station Eleven", author: "Emily St. John Mandel", award: null,
+      tags: ["dystopian", "literary fiction", "atmospheric", "hopeful"],
+      description: "Twenty years after a pandemic collapses civilization, a traveling symphony performs Shakespeare across the ruins of the old world β€” a quietly hopeful meditation on what survives." },
+
+    { title: "Gone Girl", author: "Gillian Flynn", award: null,
+      tags: ["thriller", "mystery", "dark", "twisty"],
+      description: "When his wife disappears on their fifth anniversary, a husband becomes the prime suspect β€” but nothing about this marriage, or its lies, is what it seems." },
+
+    { title: "The Silent Patient", author: "Alex Michaelides", award: "Goodreads Choice Award, Mystery & Thriller",
+      tags: ["thriller", "mystery", "twisty", "dark"],
+      description: "A woman shoots her husband and never speaks another word. The psychotherapist determined to treat her may be more entangled in her silence than anyone realizes." },
+
+    { title: "Big Little Lies", author: "Liane Moriarty", award: null,
+      tags: ["contemporary", "mystery", "dark humor", "suspenseful"],
+      description: "Behind the perfect faΓ§ades of three mothers in a wealthy beach town lies a secret that will end in murder β€” a sharp, funny, and suspenseful look at the lies we tell to survive." },
+
+    { title: "Pride and Prejudice", author: "Jane Austen", award: null,
+      tags: ["classic", "romance", "witty", "heartwarming"],
+      description: "A sharp-tongued young woman and a proud, wealthy gentleman must overcome first impressions, family meddling, and their own pride in this beloved classic of wit and romance." },
+
+    { title: "Beloved", author: "Toni Morrison", award: "Pulitzer Prize for Fiction, 1988",
+      tags: ["literary fiction", "historical fiction", "haunting", "devastating"],
+      description: "Haunted literally and figuratively by the trauma of slavery, a woman's past returns in the form of a mysterious young stranger in this searing, unforgettable novel." },
+
+    { title: "The Road", author: "Cormac McCarthy", award: "Pulitzer Prize for Fiction, 2007",
+      tags: ["dystopian", "literary fiction", "bleak", "tender"],
+      description: "A father and son walk alone through a burned America, carrying nothing but each other and the fragile hope of finding something worth surviving for." },
+
+    { title: "Never Let Me Go", author: "Kazuo Ishiguro", award: null,
+      tags: ["literary fiction", "science fiction", "melancholic", "philosophical"],
+      description: "Raised in a strange, sheltered boarding school, three friends slowly uncover the quietly devastating truth about the purpose of their lives." },
+
+    { title: "The Fault in Our Stars", author: "John Green", award: null,
+      tags: ["YA", "contemporary", "heartbreaking", "hopeful"],
+      description: "Two teenagers who meet in a cancer support group fall in love in this funny, heartbreaking story about what it means to live fully in the time we're given." }
+  ];
+
+  const bookInput = document.getElementById("bookInput");
+  const findBtn = document.getElementById("findBtn");
+  const resultArea = document.getElementById("resultArea");
+
+  function normalize(str) {
+    return str.toLowerCase().trim();
+  }
+
+  function findBookByTitle(query) {
+    const q = normalize(query);
+    return books.find(b => normalize(b.title) === q) ||
+           books.find(b => normalize(b.title).includes(q) || q.includes(normalize(b.title)));
+  }
+
+  function scoreMatch(bookA, bookB) {
+    return bookA.tags.filter(tag => bookB.tags.includes(tag)).length;
+  }
+
+  function getRecommendation(inputBook) {
+    let best = null;
+    let bestScore = -1;
+    let ties = [];
+
+    books.forEach(candidate => {
+      if (candidate.title === inputBook.title) return;
+      const score = scoreMatch(inputBook, candidate);
+      if (score > bestScore) {
+        bestScore = score;
+        ties = [candidate];
+      } else if (score === bestScore) {
+        ties.push(candidate);
+      }
+    });
+
+    best = ties[Math.floor(Math.random() * ties.length)];
+    return best;
+  }
+
+  function renderCard(inputTitle, recommendation) {
+    const tagsHTML = recommendation.tags
+      .slice(0, 4)
+      .map(tag => `<span class="tag">&#36;{tag}</span>`)
+      .join("");
+
+    const awardHTML = recommendation.award
+      ? `<div class="award-badge">πŸ† &#36;{recommendation.award}</div>`
+      : `<div class="award-badge">✨ Reader Favorite</div>`;
+
+    resultArea.innerHTML = `
+      <div class="next-chapter-card">
+        <div class="because-line">Because you loved <em>${inputTitle}</em></div>
+        <div class="book-title">${recommendation.title}</div>
+        <div class="book-author">by ${recommendation.author}</div>
+        ${awardHTML}
+        <div class="tags">${tagsHTML}</div>
+        <p class="book-description">${recommendation.description}</p>
+      </div>
+    `;
+  }
+
+  function renderNoMatch(inputTitle) {
+    resultArea.innerHTML = `
+      <div class="no-match">
+        We couldn't find "<strong>${inputTitle}</strong>" in our library yet.
+        Try checking the spelling, or try one of the suggestions above.
+      </div>
+    `;
+  }
+
+  function handleSearch() {
+    const query = bookInput.value.trim();
+    if (!query) return;
+
+    const inputBook = findBookByTitle(query);
+
+    if (!inputBook) {
+      renderNoMatch(query);
+      return;
+    }
+
+    const recommendation = getRecommendation(inputBook);
+    renderCard(inputBook.title, recommendation);
+  }
+
+  findBtn.addEventListener("click", handleSearch);
+  bookInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") handleSearch();
+  });
+</script>
+
+</body>
+</html>
